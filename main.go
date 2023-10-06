@@ -17,6 +17,8 @@ func main() {
 	}
 
 	config := fiber.Config{
+		// 100MB
+		BodyLimit: 100 * 1024 * 1024,
 		ErrorHandler: func(c *fiber.Ctx, err error) error {
 			if err == nil {
 				return nil
