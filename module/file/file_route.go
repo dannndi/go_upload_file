@@ -30,9 +30,10 @@ func Route(router fiber.Router) {
 		}
 
 		file := files[0]
-		log.Debug("Content Type : ", file.Header["Content-Type"]);
+		log.Debug("Content Type : ", file.Header["Content-Type"])
 		milis := strconv.FormatInt(time.Now().UnixMilli(), 10)
 		filePath := "./public/uploads/" + milis + "_" + file.Filename
+		fileUrl := "uploads/" + milis + "_" + file.Filename
 		err = c.SaveFile(file, filePath)
 
 		if err != nil {
@@ -42,8 +43,9 @@ func Route(router fiber.Router) {
 		}
 
 		return c.Status(fiber.StatusCreated).JSON(utils.BaseResponse{
+			Code: fiber.StatusCreated,
 			Message: "Saved",
-			Data:    filePath,
+			Data:    fileUrl,
 		})
 	})
 
@@ -63,14 +65,16 @@ func Route(router fiber.Router) {
 		for _, file := range files {
 			milis := strconv.FormatInt(time.Now().UnixMilli(), 10)
 			filePath := "./public/uploads/" + milis + "_" + file.Filename
+			fileUrl := "uploads/" + milis + "_" + file.Filename
 			err = c.SaveFile(file, filePath)
 			if err != nil {
 				continue
 			}
-			compressedFileURLs = append(compressedFileURLs, filePath)
+			compressedFileURLs = append(compressedFileURLs, fileUrl)
 		}
 
 		return c.Status(fiber.StatusCreated).JSON(utils.BaseResponse{
+			Code: fiber.StatusCreated,
 			Message: "Saved",
 			Data:    compressedFileURLs,
 		})
