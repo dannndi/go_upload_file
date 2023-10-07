@@ -6,7 +6,6 @@ import (
 
 	"github.com/dannndi/go_upload_file/core/utils"
 	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/fiber/v2/log"
 )
 
 /// api/v1/file
@@ -30,7 +29,6 @@ func Route(router fiber.Router) {
 		}
 
 		file := files[0]
-		log.Debug("Content Type : ", file.Header["Content-Type"])
 		milis := strconv.FormatInt(time.Now().UnixMilli(), 10)
 		filePath := "./public/uploads/" + milis + "_" + file.Filename
 		fileUrl := "uploads/" + milis + "_" + file.Filename
@@ -43,7 +41,7 @@ func Route(router fiber.Router) {
 		}
 
 		return c.Status(fiber.StatusCreated).JSON(utils.BaseResponse{
-			Code: fiber.StatusCreated,
+			Code:    fiber.StatusCreated,
 			Message: "Saved",
 			Data:    fileUrl,
 		})
@@ -74,7 +72,7 @@ func Route(router fiber.Router) {
 		}
 
 		return c.Status(fiber.StatusCreated).JSON(utils.BaseResponse{
-			Code: fiber.StatusCreated,
+			Code:    fiber.StatusCreated,
 			Message: "Saved",
 			Data:    compressedFileURLs,
 		})
