@@ -14,9 +14,10 @@ func Route(router fiber.Router) {
 	router.Post("/", func(c *fiber.Ctx) error {
 		// parse multiple uploaded
 		form, err := c.MultipartForm()
-
+		
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(utils.BaseResponse{
+				Code: fiber.StatusBadRequest,
 				Message: "Failed to parse uploaded files",
 			})
 		}
@@ -24,6 +25,7 @@ func Route(router fiber.Router) {
 		files := form.File["file"]
 		if len(files) == 0 {
 			return c.Status(fiber.StatusBadRequest).JSON(utils.BaseResponse{
+				Code: fiber.StatusBadRequest,
 				Message: "There's no file provided",
 			})
 		}
@@ -36,6 +38,7 @@ func Route(router fiber.Router) {
 
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(utils.BaseResponse{
+				Code: fiber.StatusBadRequest,
 				Message: "Something wrong when saving the file",
 			})
 		}
@@ -53,6 +56,7 @@ func Route(router fiber.Router) {
 
 		if err != nil {
 			return c.Status(fiber.StatusBadRequest).JSON(utils.BaseResponse{
+				Code: fiber.StatusBadRequest,
 				Message: "Failed to parse uploaded files",
 			})
 		}
